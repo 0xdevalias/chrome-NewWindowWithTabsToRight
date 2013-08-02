@@ -9,13 +9,12 @@
     "contextMenus"
   ],
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icons/NewWindowWithTabsToRight-Icon@16px.png",
+    "48": "icons/NewWindowWithTabsToRight-Icon@48px.png",
+    "128": "icons/NewWindowWithTabsToRight-Icon@128px.png"
   },
   "default_locale": "en",
   "background": {
-    // "page": "src/bg/background.html",
     "scripts": [
       "js/chromeExtensionApiAbstractions.js",
       "src/bg/background.js"
