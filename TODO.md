@@ -1,9 +1,6 @@
 ### TODO
 
-* Make a 'promo image' for the app store
-* Set version to 1.0
 * LAUNCH!
-
 * Document all functions with JSDoc
 * Abstract the rest of the API stuff into seperate/reusable file
 * Add an 'options' page with my info (name, website, blog, github, etc. donations?)
