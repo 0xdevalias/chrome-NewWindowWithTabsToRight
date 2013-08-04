@@ -6,18 +6,9 @@
  * @license The MIT License (MIT) (see LICENSE.md)
  */
 
-// TODO: Document each function (find a good JS standard way to do this)
-// TODO: Abstract the API stuff into a seperate/reusable file
-// TODO: Add copyright header with my info (name, website, etc)
-// TODO: Add Google Analytics tracking
-// TODO: Add an 'options' page with my info (name, website, blog, github, etc. donations?)
-//         Feedback/suggestions/comments/criticisms/binary love notes? => feedback@devalias.net
-//         Mention why I created this? (eg. For sesh, ping the developer or something?)
-//         New sesh with: tabs to right, current and tabs to right
-// TODO: Create my own icon for this
-
 // Menu Actions
 function newWindowWithTabsToRight(info, currentTab) {
+  _gaq.push(['_trackEvent', 'contextMenu', 'clicked', 'newWindowWithTabsToRight']);
   getTabsForParentWindowOfTab(currentTab, function(tabs) {
     var tabIds = getIdsForTabsToRightOf(currentTab.index, tabs);
     createWindowWithTabs(tabIds, function(tabs) {
@@ -27,6 +18,7 @@ function newWindowWithTabsToRight(info, currentTab) {
 }
 
 function newWindowWithCurrentAndTabsToRight(info, currentTab) {
+  _gaq.push(['_trackEvent', 'contextMenu', 'clicked', 'newWindowWithCurrentAndTabsToRight']);
   getTabsForParentWindowOfTab(currentTab, function(tabs) {
     var tabIds = getIdsForCurrentAndTabsToRightOf(currentTab.index, tabs);
     createWindowWithTabs(tabIds, function(tabs) {
@@ -35,8 +27,13 @@ function newWindowWithCurrentAndTabsToRight(info, currentTab) {
   });
 }
 
+function aboutTheDeveloper(info, currentTab) {
+  _gaq.push(['_trackEvent', 'contextMenu', 'clicked', 'aboutTheDeveloper']);
+  createTabWithUrl("http://www.devalias.net/chrome-extensions/new-window-with-tabs-to-right/", true);
+}
+
 // Menu
-// TODO: Abstract the API stuff
+// TODO: Abstract the chrome API stuff into library
 var menuRoot = chrome.contextMenus.create({
   "type": "normal",
   "title": "New window with..",
@@ -54,8 +51,21 @@ var menuWithTabsToRight = chrome.contextMenus.create({
 var menuWithThisTabAndTabsToRight = chrome.contextMenus.create({
   "type": "normal",
   "parentId": menuRoot,
-  // "enabled": false,
   "title": "..this tab and tabs to right",
   "contexts": ["page"],
   "onclick": newWindowWithCurrentAndTabsToRight
+});
+
+var menuSeparator = chrome.contextMenus.create({
+  "type": "separator",
+  "parentId": menuRoot,
+  "contexts": ["page"],
+});
+
+var menuAboutTheDeveloper = chrome.contextMenus.create({
+  "type": "normal",
+  "parentId": menuRoot,
+  "title": "About the Developer",
+  "contexts": ["page"],
+  "onclick": aboutTheDeveloper
 });
