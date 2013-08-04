@@ -13,6 +13,13 @@ This extension creates a new window with the tabs to the right of the currently 
 
 * Me! Glenn '/dev/alias' Grant (http://devalias.net/)
 
+### Where?
+
+* Here on GitHub! <3
+* [On the Chrome Web Store](https://chrome.google.com/webstore/detail/new-window-with-tabs-to-r/ldahcfljppchbfgdokomobmfdfplaman)
+* [Official Page@/dev/alias](http://www.devalias.net/chrome-extensions/new-window-with-tabs-to-right/)
+* [Announcemet Post@/dev/alias/blog]() *Coming Soon*
+
 ### License
 
 * The MIT License (MIT) (see LICENSE.md)
