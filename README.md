@@ -18,7 +18,7 @@ This extension creates a new window with the tabs to the right of the currently 
 * [Here on GitHub! <3](https://github.com/alias1/chrome-NewWindowWithTabsToRight/)
 * [On the Chrome Web Store](https://chrome.google.com/webstore/detail/new-window-with-tabs-to-r/ldahcfljppchbfgdokomobmfdfplaman)
 * [Official Page@/dev/alias](http://www.devalias.net/chrome-extensions/new-window-with-tabs-to-right/)
-* [Announcemet Post@/dev/alias/blog](http://blog.devalias.net/post/57586770334/new-window-with-tabs-to-right-chrome-extension) *Coming Soon*
+* [Announcemet Post@/dev/alias/blog](http://blog.devalias.net/post/57586770334/new-window-with-tabs-to-right-chrome-extension)
 
 ### License
 
