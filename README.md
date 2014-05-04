@@ -1,5 +1,7 @@
 # chrome-NewWindowWithTabsToRight
 
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=alias1&url=https://github.com/alias1/chrome-NewWindowWithTabsToRight&title=chrome-NewWindowWithTabsToRight&language=&tags=github&category=software)
+
 This extension creates a new window with the tabs to the right of the currently selected tab.
 
 ### Why?
