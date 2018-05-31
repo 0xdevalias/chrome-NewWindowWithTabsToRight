@@ -32,6 +32,20 @@ function aboutTheDeveloper(info, currentTab) {
   createTabWithUrl("http://www.devalias.net/chrome-extensions/new-window-with-tabs-to-right/", true);
 }
 
+// Keybinding handlers
+chrome.commands.onCommand.addListener(function(command) {
+    var qOptions = {currentWindow: true, active: true}
+    chrome.tabs.query(qOptions, function(arrayOfTabs) {
+		var curTab = arrayOfTabs[0];
+        if (command == "newWindowWithTabsToRight") {
+            newWindowWithTabsToRight(qOptions, curTab);
+        }
+        else if (command == "newWindowWithThisAndTabsToRight") {
+            newWindowWithThisAndTabsToRight(qOptions, curTab);
+        }
+	});
+});
+
 // Menu
 // TODO: Abstract the chrome API stuff into library
 var menuRoot = chrome.contextMenus.create({

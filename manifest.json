@@ -22,5 +22,14 @@
       "src/bg/background.js"
     ],
     "persistent": true
+  },
+  "commands": {
+      "newWindowWithTabsToRight": {
+          "suggested_key": {
+              "default": "Ctrl+Shift+U",
+              "mac": "Command+Shift+U"
+          },
+          "description": "Create a new window with the tabs on the right."
+      }
   }
 }
