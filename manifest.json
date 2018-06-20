@@ -24,6 +24,13 @@
     "persistent": true
   },
   "commands": {
+      "newWindowWithCurrentAndTabsToRight": {
+          "suggested_key": {
+              "default": "Ctrl+Shift+Y",
+              "mac": "Command+Shift+Y"
+          },
+          "description": "Create a new window with the current tab and tabs on the right."
+      },
       "newWindowWithTabsToRight": {
           "suggested_key": {
               "default": "Ctrl+Shift+U",

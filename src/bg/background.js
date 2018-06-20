@@ -40,8 +40,8 @@ chrome.commands.onCommand.addListener(function(command) {
         if (command == "newWindowWithTabsToRight") {
             newWindowWithTabsToRight(qOptions, curTab);
         }
-        else if (command == "newWindowWithThisAndTabsToRight") {
-            newWindowWithThisAndTabsToRight(qOptions, curTab);
+        else if (command == "newWindowWithCurrentAndTabsToRight") {
+            newWindowWithCurrentAndTabsToRight(qOptions, curTab);
         }
 	});
 });
