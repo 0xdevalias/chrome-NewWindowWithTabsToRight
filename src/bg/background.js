@@ -29,7 +29,7 @@ function newWindowWithCurrentAndTabsToRight(info, currentTab) {
 
 function aboutTheDeveloper(info, currentTab) {
   _gaq.push(['_trackEvent', 'contextMenu', 'clicked', 'aboutTheDeveloper']);
-  createTabWithUrl("http://www.devalias.net/chrome-extensions/new-window-with-tabs-to-right/", true);
+  createTabWithUrl("http://devalias.net/dev/chrome-extensions/new-window-with-tabs-to-right/", true);
 }
 
 // Keybinding handlers

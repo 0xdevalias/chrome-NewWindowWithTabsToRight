@@ -13,14 +13,14 @@ This extension creates a new window with the tabs to the right of the currently 
 
 ### Who?
 
-* Me! Glenn '/dev/alias' Grant (http://devalias.net/)
+* Me! Glenn 'devalias' Grant (http://devalias.net/)
 
 ### Where?
 
-* [Here on GitHub! <3](https://github.com/alias1/chrome-NewWindowWithTabsToRight/)
+* [Here on GitHub! <3](https://github.com/0xdevalias/chrome-NewWindowWithTabsToRight/)
 * [On the Chrome Web Store](https://chrome.google.com/webstore/detail/new-window-with-tabs-to-r/ldahcfljppchbfgdokomobmfdfplaman)
-* [Official Page@/dev/alias](http://www.devalias.net/chrome-extensions/new-window-with-tabs-to-right/)
-* [Announcemet Post@/dev/alias/blog](http://blog.devalias.net/post/57586770334/new-window-with-tabs-to-right-chrome-extension)
+* [Official Page](http://devalias.net/dev/chrome-extensions/new-window-with-tabs-to-right/)
+* [Announcemet Post](http://devalias.net/devalias/2013/08/08/new-window-with-tabs-to-right-chrome-extension/)
 
 ### License
 
