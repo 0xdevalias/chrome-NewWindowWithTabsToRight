@@ -50,14 +50,14 @@ chrome.commands.onCommand.addListener(function(command) {
 // TODO: Abstract the chrome API stuff into library
 var menuRoot = chrome.contextMenus.create({
   "type": "normal",
-  "title": "New window with..",
+  "title": "New window with...",
   "contexts": ["page"]
 });
 
 var menuWithTabsToRight = chrome.contextMenus.create({
   "type": "normal",
   "parentId": menuRoot,
-  "title": "..tabs to right",
+  "title": "Tabs to the right",
   "contexts": ["page"],
   "onclick": newWindowWithTabsToRight
 });
@@ -65,7 +65,7 @@ var menuWithTabsToRight = chrome.contextMenus.create({
 var menuWithThisTabAndTabsToRight = chrome.contextMenus.create({
   "type": "normal",
   "parentId": menuRoot,
-  "title": "..this tab and tabs to right",
+  "title": "This tab and tabs to the right",
   "contexts": ["page"],
   "onclick": newWindowWithCurrentAndTabsToRight
 });
