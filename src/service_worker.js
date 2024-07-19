@@ -9,7 +9,7 @@ import Analytics from './google-analytics.js';
  * @see {@link https://developer.chrome.com/docs/extensions/develop/ui/context-menu}
  */
 chrome.runtime.onInstalled.addListener(async (details) => {
-  const menuContexts = ["page"];
+  const menuContexts = ["page", "action"];
 
   const menuRoot = chrome.contextMenus.create({
     contexts: menuContexts,
