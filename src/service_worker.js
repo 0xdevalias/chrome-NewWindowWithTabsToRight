@@ -1,3 +1,5 @@
+import Analytics from './google-analytics.js';
+
 /**
  * Handles the extension's installation event.
  * Sets up context menus.
@@ -6,7 +8,7 @@
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/contextMenus#method-create}
  * @see {@link https://developer.chrome.com/docs/extensions/develop/ui/context-menu}
  */
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener(async (details) => {
   const menuContexts = ["page"];
 
   const menuRoot = chrome.contextMenus.create({
@@ -42,6 +44,10 @@ chrome.runtime.onInstalled.addListener(() => {
     id: aboutTheDeveloper.name,
     title: "About the Developer"
   });
+
+  await Analytics.fireEvent('extension_lifecycle', {
+    reason: details.reason
+  });
 });
 
 /**
@@ -60,6 +66,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   };
 
   await handlers[info.menuItemId]?.(tab);
+
+  await Analytics.fireEvent('task_triggered', {
+    source: 'contextMenu',
+    task: info.menuItemId
+  });
 });
 
 /**
@@ -77,6 +88,11 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
   };
 
   await handlers[command]?.(tab);
+
+  await Analytics.fireEvent('task_triggered', {
+    source: 'command',
+    task: command
+  });
 });
 
 /**

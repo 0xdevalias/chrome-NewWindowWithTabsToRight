@@ -12,7 +12,8 @@
     "128": "icons/NewWindowWithTabsToRight-Icon@128px.png"
   },
   "permissions": [
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
