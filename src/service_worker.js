@@ -11,6 +11,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
   const menuRoot = chrome.contextMenus.create({
     contexts: menuContexts,
+    id: 'rootContextMenu',
     title: "New window with.."
   });
 
@@ -31,6 +32,7 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     contexts: menuContexts,
     parentId: menuRoot,
+    id: 'contextMenu-separator',
     type: "separator"
   });
 
