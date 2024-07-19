@@ -1,0 +1,75 @@
+#!/usr/bin/env zsh
+
+# Capture script name
+SCRIPT_NAME=$0
+
+# Variables
+DIST_DIR="dist"
+ITEMS_TO_COPY=("README.md" "LICENSE.md" "manifest.json" "src" "icons")
+EXTENSION_NAME="newWindowWithTabsToRight"
+
+# Function to show help
+show_help() {
+  echo "Usage: $SCRIPT_NAME [options]"
+  echo "Options:"
+  echo "  -h, --help   Show this help message"
+}
+
+# Function to read version from manifest.json using jq
+read_version() {
+  if ! command -v jq &> /dev/null; then
+    echo "Error: jq is not installed."
+    exit 1
+  fi
+
+  VERSION=$(jq -r '.version' manifest.json)
+  if [ -z "$VERSION" ]; then
+    echo "Error: Could not read version from manifest.json"
+    exit 1
+  fi
+}
+
+# Parse options
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    -h|--help) show_help; exit 0;;
+    *) echo "Unknown option: $1"; show_help; exit 1;;
+  esac
+  shift
+done
+
+# Read version
+echo "Reading version from manifest.json..."
+read_version
+echo "Version: $VERSION"
+
+# Create zip filename
+ZIP_FILE="${EXTENSION_NAME}-${VERSION}.zip"
+
+# Create the dist directory
+echo "Creating dist directory..."
+mkdir -p $DIST_DIR
+
+# Copy files and directories using rsync to exclude .DS_Store files
+echo "Copying files and directories..."
+for item in ${ITEMS_TO_COPY[@]}; do
+  if [ -e $item ]; then
+    rsync -a --exclude='.DS_Store' $item $DIST_DIR/
+    echo "  Copied: $item"
+  else
+    echo "  Warning: $item does not exist."
+  fi
+done
+
+# Create zip file
+if [ -f $ZIP_FILE ]; then
+  echo "Removing existing zip file: $ZIP_FILE"
+  rm $ZIP_FILE
+fi
+
+echo "Creating zip file: $ZIP_FILE"
+cd $DIST_DIR
+zip -r ../$ZIP_FILE ./*
+cd ..
+
+echo "Build completed. Files are in the $DIST_DIR directory and zipped in $ZIP_FILE."
