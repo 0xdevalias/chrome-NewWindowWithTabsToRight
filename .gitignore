@@ -2,3 +2,6 @@
 
 dist/
 *.zip
+
+# IDEs
+.idea/
