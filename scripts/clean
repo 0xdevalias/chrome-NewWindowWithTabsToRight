@@ -1,0 +1,48 @@
+#!/usr/bin/env zsh
+
+# Capture script name
+SCRIPT_NAME=$0
+
+# Variables
+DIST_DIR="dist"
+EXTENSION_NAME="newWindowWithTabsToRight"
+
+# Function to show help
+show_help() {
+  echo "Usage: $SCRIPT_NAME [options]"
+  echo "Options:"
+  echo "  -h, --help   Show this help message"
+}
+
+# Parse options
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    -h|--help) show_help; exit 0;;
+    *) echo "Unknown option: $1"; show_help; exit 1;;
+  esac
+  shift
+done
+
+# Remove the dist directory
+if [ -d ./$DIST_DIR ]; then
+  echo "Removing dist directory: $DIST_DIR"
+  rm -rf ./$DIST_DIR
+else
+  echo "Dist directory does not exist: $DIST_DIR"
+fi
+
+# Find and remove the zip files with NULL_GLOB enabled just for this line
+ZIP_FILES=($(setopt NULL_GLOB; echo ./${EXTENSION_NAME}-*.zip))
+
+# Remove the zip files
+if [ ${#ZIP_FILES[@]} -gt 0 ]; then
+  echo "Removing zip files:"
+  for file in $ZIP_FILES; do
+    echo "  $file"
+    rm -f "$file"
+  done
+else
+  echo "No zip files found matching: ${EXTENSION_NAME}-*.zip"
+fi
+
+echo "Cleanup completed. $DIST_DIR directory and matching zip files in the current directory have been removed."

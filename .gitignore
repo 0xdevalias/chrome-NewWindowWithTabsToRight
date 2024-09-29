@@ -1,1 +1,7 @@
 .DS_STORE
+
+dist/
+*.zip
+
+# IDEs
+.idea/

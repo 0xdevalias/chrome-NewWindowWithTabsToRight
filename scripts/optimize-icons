@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+
+# Capture script name
+SCRIPT_NAME=$0
+
+# Variables
+ICONS_DIR="icons"
+
+# Function to show help
+show_help() {
+  echo "Usage: $SCRIPT_NAME [options]"
+  echo "Options:"
+  echo "  -h, --help   Show this help message"
+}
+
+# Parse options
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    -h|--help) show_help; exit 0;;
+    *) echo "Unknown option: $1"; show_help; exit 1;;
+  esac
+  shift
+done
+
+# Check if oxipng is installed
+if ! command -v oxipng &> /dev/null; then
+  echo "oxipng is not installed."
+  read "response?Would you like to install it with Homebrew? (y/n) "
+  if [[ "$response" == "y" || "$response" == "Y" ]]; then
+    if command -v brew &> /dev/null; then
+      echo "Installing oxipng with Homebrew..."
+      brew install oxipng
+    else
+      echo "Homebrew is not installed. Please install Homebrew first: https://brew.sh/"
+      exit 1
+    fi
+  else
+    echo "Please install oxipng with Homebrew: brew install oxipng"
+    exit 1
+  fi
+fi
+
+# Optimize PNG files in the icons directory
+if [ -d $ICONS_DIR ]; then
+  echo "Optimizing PNG files in the $ICONS_DIR directory..."
+  oxipng -o max --dir $ICONS_DIR --alpha $ICONS_DIR/*.png
+  echo "Optimization completed."
+else
+  echo "Icons directory does not exist: $ICONS_DIR"
+  exit 1
+fi
