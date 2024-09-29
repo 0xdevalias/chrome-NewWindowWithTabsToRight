@@ -1,8 +1,8 @@
 import Analytics from './google-analytics.js';
 
 /**
- * Handles the extension's installation event.
- * Sets up context menus.
+ * Fired when the extension is first installed, when the extension is updated to a new version, and when Chrome is
+ * updated to a new version.
  *
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/runtime#event-onInstalled}
  */
@@ -15,12 +15,14 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 });
 
 /**
- * Handles context menu item clicks.
+ * Fired when a context menu item is clicked.
  *
  * @param {object} info - Information about the item clicked and the context where the click happened.
  * @param {object} tab - The details of the tab where the click happened.
  *
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/contextMenus#event-onClicked}
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/contextMenus#type-OnClickData}
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab}
  */
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   const handlers = {
@@ -38,12 +40,13 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 });
 
 /**
- * Handles keyboard command execution.
+ * Fired when a registered command is activated using a keyboard shortcut.
  *
  * @param {string} command - The name of the command.
  * @param {object} tab - The details of the tab where the command was executed.
  *
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/commands#event-onCommand}
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab}
  */
 chrome.commands.onCommand.addListener(async (command, tab) => {
   const handlers = {
@@ -108,6 +111,8 @@ async function updateContextMenus() {
  * Opens a new window with the current tab and tabs to the right.
  *
  * @param {object} tab - The details of the current tab.
+ *
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab}
  */
 async function newWindowWithCurrentAndTabsToRight(tab) {
   const tabIds = await getTabIdsToMove({ tab, includeCurrentTab: true });
@@ -118,6 +123,8 @@ async function newWindowWithCurrentAndTabsToRight(tab) {
  * Opens a new window with tabs to the right of the current tab.
  *
  * @param {object} tab - The details of the current tab.
+ *
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab}
  */
 async function newWindowWithTabsToRight(tab) {
   const tabIds = await getTabIdsToMove({ tab, includeCurrentTab: false });
@@ -142,6 +149,7 @@ async function aboutTheDeveloper() {
  * @returns {Promise<number[]>} A promise that resolves to an array of tab IDs.
  *
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#method-query}
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab}
  */
 async function getTabIdsToMove({ tab, includeCurrentTab }) {
   let currentTab = tab;
