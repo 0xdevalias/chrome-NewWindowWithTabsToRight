@@ -18,6 +18,24 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 });
 
 /**
+ * Fired when an action icon is clicked. This event will not fire if the action has a popup.
+ *
+ * @param {object} tab - The details of the tab where the action button was clicked.
+ *
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/action#event-onClicked}
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab}
+ * @see {@link https://developer.chrome.com/docs/extensions/develop/ui/implement-action}
+ */
+chrome.action.onClicked.addListener(async (tab) => {
+  await newWindowWithCurrentAndTabsToRight(tab);
+
+  await Analytics.fireEvent('task_triggered', {
+    source: 'action',
+    task: 'actionIcon'
+  });
+});
+
+/**
  * Fired when a context menu item is clicked.
  *
  * @param {object} info - Information about the item clicked and the context where the click happened.

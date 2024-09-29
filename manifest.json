@@ -22,6 +22,14 @@
     "service_worker": "src/service_worker.js",
     "type": "module"
   },
+  "action": {
+    "default_icon": {
+      "16": "icons/NewWindowWithTabsToRight-Icon@16px.png",
+      "32": "icons/NewWindowWithTabsToRight-Icon@32px.png",
+      "48": "icons/NewWindowWithTabsToRight-Icon@48px.png",
+      "128": "icons/NewWindowWithTabsToRight-Icon@128px.png"
+    }
+  },
   "commands": {
     "newWindowWithCurrentAndTabsToRight": {
       "suggested_key": {
