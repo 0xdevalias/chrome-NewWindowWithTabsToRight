@@ -1,4 +1,5 @@
 import Analytics from './google-analytics.js';
+import { CONTEXT_MENU_SETTINGS_KEYS, STORAGE_KEYS, getSettings, setSettings } from "./settings.js";
 
 /**
  * Fired when the extension is first installed, when the extension is updated to a new version, and when Chrome is
@@ -29,6 +30,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     newWindowWithCurrentAndTabsToRight,
     newWindowWithTabsToRight,
     aboutTheDeveloper,
+    togglePageContextMenu,
   };
 
   await handlers[info.menuItemId]?.(tab);
@@ -63,6 +65,29 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
 });
 
 /**
+ * Fired when one or more storage items change.
+ *
+ * Handles changes to the extension's settings/etc.
+ *
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/storage#event-onChanged}
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/storage#type-StorageChange}
+ */
+chrome.storage.onChanged.addListener(async (changes, areaName) => {
+  if (areaName === 'sync' && STORAGE_KEYS.SETTINGS in changes) {
+    const { oldValue = {}, newValue = {} } = changes[STORAGE_KEYS.SETTINGS];
+
+    // Check if any context menu-related settings have changed
+    const contextMenuSettingsChanged = CONTEXT_MENU_SETTINGS_KEYS.some((key) => {
+      return oldValue[key] !== newValue[key];
+    });
+
+    if (contextMenuSettingsChanged) {
+      await updateContextMenus();
+    }
+  }
+});
+
+/**
  * Updates the context menus based on the current settings.
  *
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/contextMenus#method-removeAll}
@@ -70,7 +95,19 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
  * @see {@link https://developer.chrome.com/docs/extensions/develop/ui/context-menu}
  */
 async function updateContextMenus() {
-  const menuContexts = ["page", "action"];
+  // Get settings from storage
+  const settings = await getSettings();
+
+  // Determine the contexts based on settings
+  const menuContexts = ["action"];
+  if (settings.showInPageContext) {
+    menuContexts.push("page");
+  }
+
+  // Remove all existing context menus
+  await chrome.contextMenus.removeAll();
+
+  // Create context menus
 
   const menuRoot = chrome.contextMenus.create({
     contexts: menuContexts,
@@ -95,7 +132,32 @@ async function updateContextMenus() {
   chrome.contextMenus.create({
     contexts: menuContexts,
     parentId: menuRoot,
-    id: 'contextMenu-separator',
+    id: 'contextMenu-separator-1',
+    type: "separator"
+  });
+
+  // Create 'Options' submenu
+
+  const optionsMenu = chrome.contextMenus.create({
+    contexts: menuContexts,
+    parentId: menuRoot,
+    id: 'optionsMenu',
+    title: 'Options'
+  });
+
+  chrome.contextMenus.create({
+    contexts: menuContexts,
+    parentId: optionsMenu,
+    id: togglePageContextMenu.name,
+    title: 'Show page context menu',
+    type: 'checkbox',
+    checked: settings.showInPageContext,
+  });
+
+  chrome.contextMenus.create({
+    contexts: menuContexts,
+    parentId: menuRoot,
+    id: 'contextMenu-separator-2',
     type: "separator"
   });
 
@@ -138,6 +200,16 @@ async function newWindowWithTabsToRight(tab) {
  */
 async function aboutTheDeveloper() {
   chrome.tabs.create({ url: "http://devalias.net/dev/chrome-extensions/new-window-with-tabs-to-right/", active: true });
+}
+
+/**
+ * Toggles the option to show the 'page' context menu on or off.
+ */
+async function togglePageContextMenu() {
+  await setSettings(settings => ({
+    ...settings,
+    showInPageContext: !settings.showInPageContext,
+  }));
 }
 
 /**
