@@ -5,45 +5,9 @@ import Analytics from './google-analytics.js';
  * Sets up context menus.
  *
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/runtime#event-onInstalled}
- * @see {@link https://developer.chrome.com/docs/extensions/reference/api/contextMenus#method-create}
- * @see {@link https://developer.chrome.com/docs/extensions/develop/ui/context-menu}
  */
 chrome.runtime.onInstalled.addListener(async (details) => {
-  const menuContexts = ["page", "action"];
-
-  const menuRoot = chrome.contextMenus.create({
-    contexts: menuContexts,
-    id: 'rootContextMenu',
-    title: "New window with.."
-  });
-
-  chrome.contextMenus.create({
-    contexts: menuContexts,
-    parentId: menuRoot,
-    id: newWindowWithCurrentAndTabsToRight.name,
-    title: "..this tab and tabs to right"
-  });
-
-  chrome.contextMenus.create({
-    contexts: menuContexts,
-    parentId: menuRoot,
-    id: newWindowWithTabsToRight.name,
-    title: "..tabs to right"
-  });
-
-  chrome.contextMenus.create({
-    contexts: menuContexts,
-    parentId: menuRoot,
-    id: 'contextMenu-separator',
-    type: "separator"
-  });
-
-  chrome.contextMenus.create({
-    contexts: menuContexts,
-    parentId: menuRoot,
-    id: aboutTheDeveloper.name,
-    title: "About the Developer"
-  });
+  await updateContextMenus();
 
   await Analytics.fireEvent('extension_lifecycle', {
     reason: details.reason
@@ -94,6 +58,51 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
     task: command
   });
 });
+
+/**
+ * Updates the context menus based on the current settings.
+ *
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/contextMenus#method-removeAll}
+ * @see {@link https://developer.chrome.com/docs/extensions/reference/api/contextMenus#method-create}
+ * @see {@link https://developer.chrome.com/docs/extensions/develop/ui/context-menu}
+ */
+async function updateContextMenus() {
+  const menuContexts = ["page", "action"];
+
+  const menuRoot = chrome.contextMenus.create({
+    contexts: menuContexts,
+    id: 'rootContextMenu',
+    title: "New window with.."
+  });
+
+  chrome.contextMenus.create({
+    contexts: menuContexts,
+    parentId: menuRoot,
+    id: newWindowWithCurrentAndTabsToRight.name,
+    title: "..this tab and tabs to right"
+  });
+
+  chrome.contextMenus.create({
+    contexts: menuContexts,
+    parentId: menuRoot,
+    id: newWindowWithTabsToRight.name,
+    title: "..tabs to right"
+  });
+
+  chrome.contextMenus.create({
+    contexts: menuContexts,
+    parentId: menuRoot,
+    id: 'contextMenu-separator',
+    type: "separator"
+  });
+
+  chrome.contextMenus.create({
+    contexts: menuContexts,
+    parentId: menuRoot,
+    id: aboutTheDeveloper.name,
+    title: "About the Developer"
+  });
+}
 
 /**
  * Opens a new window with the current tab and tabs to the right.
