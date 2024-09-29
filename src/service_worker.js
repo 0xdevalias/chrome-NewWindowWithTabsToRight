@@ -1,6 +1,8 @@
 import Analytics from './google-analytics.js';
 import { CONTEXT_MENU_SETTINGS_KEYS, STORAGE_KEYS, getSettings, setSettings } from "./settings.js";
 
+const ABOUT_THE_DEVELOPER_URL = 'https://www.devalias.net/dev/chrome-extensions/new-window-with-tabs-to-right/';
+
 /**
  * Fired when the extension is first installed, when the extension is updated to a new version, and when Chrome is
  * updated to a new version.
@@ -199,7 +201,7 @@ async function newWindowWithTabsToRight(tab) {
  * @see {@link https://developer.chrome.com/docs/extensions/reference/api/tabs#method-create}
  */
 async function aboutTheDeveloper() {
-  chrome.tabs.create({ url: "http://devalias.net/dev/chrome-extensions/new-window-with-tabs-to-right/", active: true });
+  await chrome.tabs.create({ url: ABOUT_THE_DEVELOPER_URL, active: true });
 }
 
 /**
